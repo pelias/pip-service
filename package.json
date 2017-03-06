@@ -1,13 +1,14 @@
 {
   "name": "pelias-pip-service",
   "description": "Module that starts a Who's on First-based point-in-polygon service",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "main": "index.js",
   "scripts": {
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
     "travis": "npm test",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Mapzen",
   "license": "MIT",
@@ -29,7 +30,8 @@
     "proxyquire": "^1.7.10",
     "request": "^2.79.0",
     "tap-dot": "^1.0.1",
-    "tape": "^4.2.2"
+    "tape": "^4.2.2",
+    "semantic-release": "^6.3.2"
   },
   "pre-commit": [
     "lint",
