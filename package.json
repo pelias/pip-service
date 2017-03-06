@@ -1,18 +1,27 @@
 {
   "name": "pelias-pip-service",
+  "description": "Module that starts a Who's on First-based point-in-polygon service",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
+    "travis": "npm test",
     "validate": "npm ls"
   },
-  "author": "",
+  "author": "Mapzen",
   "license": "MIT",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelias/pip-service.git"
+  },
   "dependencies": {
-    "express": "^4.14.1",
-    "lodash": "^4.17.4"
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "pelias-wof-admin-lookup": "^3.1.2"
   },
   "devDependencies": {
     "jshint": "^2.8.0",

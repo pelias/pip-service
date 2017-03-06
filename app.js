@@ -24,14 +24,14 @@ const lookup = (req, res, next) => {
     req.query.resolved = result;
     next();
   });
-}
+};
 
 const output = (req, res, next) => {
   res.send(req.query.resolved);
   next();
-}
+};
 
-var router = Router();
+const router = new Router();
 router.get('/:lon/:lat', validate, lookup, output);
 
 app.use(router);
