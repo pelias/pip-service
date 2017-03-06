@@ -4,6 +4,7 @@
   "version": "0.0.0-development",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
     "travis": "npm test",
