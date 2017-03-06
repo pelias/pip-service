@@ -1,0 +1,30 @@
+{
+  "name": "pelias-pip-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test | tap-dot",
+    "lint": "jshint .",
+    "validate": "npm ls"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.1",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "precommit-hook": "^3.0.0",
+    "proxyquire": "^1.7.10",
+    "request": "^2.79.0",
+    "tap-dot": "^1.0.1",
+    "tape": "^4.2.2"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
+}
