@@ -5,11 +5,13 @@ const proxyquire = require('proxyquire').noCallThru();
 tape('default port', (test) => {
   test.test('port not specified in environment should listen on port 3102', (t) => {
     proxyquire('../index', {
-      './app': {
-        listen: (port) => {
-          t.equals(port, 3102);
-          t.end();
-        }
+      './app': () => {
+        return {
+          listen: (port) => {
+            t.equals(port, 3102);
+            t.end();
+          }
+        };
       }
     });
 
@@ -23,11 +25,13 @@ tape('environment-specified port', (test) => {
     process.env.PORT = 8080;
 
     proxyquire('../index', {
-      './app': {
-        listen: (port) => {
-          t.equals(port, 8080);
-          t.end();
-        }
+      './app': () => {
+        return {
+          listen: (port) => {
+            t.equals(port, 8080);
+            t.end();
+          }
+        };
       }
     });
 

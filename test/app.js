@@ -6,7 +6,8 @@ tape('entry point tests', (test) => {
   test.test('valid lat/lon should call lookup and return result', (t) => {
     const app = proxyquire('../app', {
       'pelias-wof-admin-lookup': {
-        resolver: () => {
+        resolver: (datapath) => {
+          t.equals(datapath, 'this is the datapath');
           return {
             lookup: (centroid, layers, callback) => {
               t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
@@ -16,7 +17,7 @@ tape('entry point tests', (test) => {
           };
         }
       }
-    });
+    })('this is the datapath');
     const server = app.listen();
     const port = server.address().port;
 
@@ -34,7 +35,8 @@ tape('entry point tests', (test) => {
   test.test('request not matching desired path should return 404', (t) => {
     const app = proxyquire('../app', {
       'pelias-wof-admin-lookup': {
-        resolver: () => {
+        resolver: (datapath) => {
+          t.equals(datapath, 'this is the datapath');
           return {
             lookup: () => {
               throw Error('lookup should not have been called');
@@ -42,7 +44,7 @@ tape('entry point tests', (test) => {
           };
         }
       }
-    });
+    })('this is the datapath');
     const server = app.listen();
     const port = server.address().port;
 
@@ -60,7 +62,8 @@ tape('entry point tests', (test) => {
     test.test('non-finite lat should return 400', (t) => {
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: () => {
+          resolver: (datapath) => {
+            t.equals(datapath, 'this is the datapath');
             return {
               lookup: () => {
                 throw Error('lookup should not have been called');
@@ -68,7 +71,7 @@ tape('entry point tests', (test) => {
             };
           }
         }
-      });
+      })('this is the datapath');
       const server = app.listen();
       const port = server.address().port;
 
@@ -89,7 +92,8 @@ tape('entry point tests', (test) => {
     test.test('non-finite lon should return 400', (t) => {
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: () => {
+          resolver: (datapath) => {
+            t.equals(datapath, 'this is the datapath');
             return {
               lookup: () => {
                 throw Error('lookup should not have been called');
@@ -97,7 +101,7 @@ tape('entry point tests', (test) => {
             };
           }
         }
-      });
+      })('this is the datapath');
       const server = app.listen();
       const port = server.address().port;
 

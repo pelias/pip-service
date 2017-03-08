@@ -1,7 +1,7 @@
 const app = require('express')();
 const _ = require('lodash');
 const Router = require('express').Router;
-const pointInPoly = require('pelias-wof-admin-lookup').resolver();
+const adminLookup = require('pelias-wof-admin-lookup');
 
 const validate = (req, res, next) => {
   req.query.centroid = {
@@ -11,29 +11,34 @@ const validate = (req, res, next) => {
 
   if (!_.isFinite(req.query.centroid.lat) || !_.isFinite(req.query.centroid.lon)) {
     res.status(400).send('Cannot parse input');
-    // skip lookup middleware
-    next('route');
+    next('route'); // skip lookup middleware
   } else {
     next();
   }
 
 };
 
-const lookup = (req, res, next) => {
-  pointInPoly.lookup(req.query.centroid, undefined, (err, result) => {
-    req.query.resolved = result;
-    next();
-  });
-};
+function lookup(pointInPoly) {
+  return (req, res, next) => {
+    pointInPoly.lookup(req.query.centroid, undefined, (err, result) => {
+      req.query.resolved = result;
+      next();
+    });
+  };
+}
 
 const output = (req, res, next) => {
   res.send(req.query.resolved);
   next();
 };
 
-const router = new Router();
-router.get('/:lon/:lat', validate, lookup, output);
+module.exports = (datapath) => {
+  const pointInPoly = adminLookup.resolver(datapath);
 
-app.use(router);
+  const router = new Router();
+  router.get('/:lon/:lat', validate, lookup(pointInPoly), output);
 
-module.exports = app;
+  app.use(router);
+  return app;
+
+};
