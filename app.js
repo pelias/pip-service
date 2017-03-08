@@ -8,6 +8,7 @@ const validate = (req, res, next) => {
     lat: _.toNumber(req.params.lat),
     lon: _.toNumber(req.params.lon)
   };
+  console.error(`received request for centroid ${JSON.stringify(req.query.centroid)}`);
 
   if (!_.isFinite(req.query.centroid.lat) || !_.isFinite(req.query.centroid.lon)) {
     res.status(400).send('Cannot parse input');
