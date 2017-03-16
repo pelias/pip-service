@@ -1,11 +1,12 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 # dependencies (for node)
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y git-core curl bzip2
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 
 # rest of dependencies
 RUN apt-get update && apt-get install -y nodejs
+RUN npm install -g npm
 
 # copy in the pip-service code
 WORKDIR /pip
@@ -15,9 +16,5 @@ RUN npm install
 # creates a directory called data
 VOLUME /whosonfirst
 
-RUN echo "starting pip service"
-
-# start the pip service
+# start the pip service using the directory the data was downloaded to
 CMD ["npm", "start", "--", "/whosonfirst"]
-
-RUN echo "started pip service"
