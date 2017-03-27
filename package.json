@@ -23,8 +23,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "lodash": "^4.17.4",
-    "pelias-wof-admin-lookup": "^3.2.0",
-    "ps-node": "^0.1.4"
+    "pelias-wof-admin-lookup": "^3.2.0"
   },
   "devDependencies": {
     "jshint": "^2.8.0",
