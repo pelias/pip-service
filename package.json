@@ -7,9 +7,10 @@
     "start": "node index.js",
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
-    "travis": "npm test",
+    "travis": "npm run check-dependencies && npm test",
     "validate": "npm ls",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "check-dependencies": "node_modules/.bin/npm-check --production"
   },
   "author": "Mapzen",
   "license": "MIT",
@@ -38,6 +39,7 @@
   "pre-commit": [
     "lint",
     "validate",
-    "test"
+    "test",
+    "check-dependencies"
   ]
 }
