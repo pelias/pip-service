@@ -2,6 +2,8 @@ const app = require('express')();
 const _ = require('lodash');
 const Router = require('express').Router;
 const adminLookup = require('pelias-wof-admin-lookup');
+const fs = require('fs');
+const path = require('path');
 
 const validate = (req, res, next) => {
   req.query.centroid = {
@@ -33,6 +35,10 @@ const output = (req, res, next) => {
 };
 
 module.exports = (datapath) => {
+  if (!['meta', 'data'].every((sub) => { return fs.existsSync(path.join(datapath, sub)); })) {
+    throw Error(`${datapath} does not contain Who's on First data`);
+  }
+
   const pointInPoly = adminLookup.resolver(datapath);
 
   const router = new Router();

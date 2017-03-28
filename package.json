@@ -23,16 +23,17 @@
   "dependencies": {
     "express": "^4.15.2",
     "lodash": "^4.17.4",
-    "pelias-wof-admin-lookup": "git://github.com/pelias/wof-admin-lookup.git#expose-resolver-in-exports"
+    "pelias-wof-admin-lookup": "^3.3.0"
   },
   "devDependencies": {
     "jshint": "^2.8.0",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^1.7.10",
     "request": "^2.79.0",
+    "semantic-release": "^6.3.2",
     "tap-dot": "^1.0.1",
     "tape": "^4.2.2",
-    "semantic-release": "^6.3.2"
+    "temp": "^0.8.3"
   },
   "pre-commit": [
     "lint",
