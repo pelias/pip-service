@@ -5,6 +5,10 @@ const adminLookup = require('pelias-wof-admin-lookup');
 const fs = require('fs');
 const path = require('path');
 
+const morgan = require( 'morgan' );
+const logger = require('pelias-logger').get('pip');
+const through = require( 'through2' );
+
 const validate = (req, res, next) => {
   req.query.centroid = {
     lat: _.toNumber(req.params.lat),
@@ -13,7 +17,7 @@ const validate = (req, res, next) => {
 
   if (!_.isFinite(req.query.centroid.lat) || !_.isFinite(req.query.centroid.lon)) {
     res.status(400).send('Cannot parse input');
-    next('route'); // skip lookup middleware
+    next('route'); // skip lookup middleware and output, still logs
   } else {
     next();
   }
@@ -30,9 +34,18 @@ function lookup(pointInPoly) {
 }
 
 const output = (req, res, next) => {
-  res.send(req.query.resolved);
+  res.status(200).send(req.query.resolved);
   next();
 };
+
+function log() {
+  return morgan('combined', {
+    stream: through( function write( ln, _, next ){
+      logger.info( ln.toString().trim() );
+      next();
+    })
+  });
+}
 
 module.exports = (datapath) => {
   if (!['meta', 'data'].every((sub) => { return fs.existsSync(path.join(datapath, sub)); })) {
@@ -44,7 +57,7 @@ module.exports = (datapath) => {
   const router = new Router();
   router.get('/:lon/:lat', validate, lookup(pointInPoly), output);
 
-  app.use(router);
+  app.use(log(), router);
   return app;
 
 };

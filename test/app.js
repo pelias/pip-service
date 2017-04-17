@@ -4,9 +4,11 @@ const proxyquire = require('proxyquire').noCallThru();
 const fs = require('fs');
 const path = require('path');
 const temp = require('temp').track();
+const mocklogger = require('pelias-mock-logger');
 
 tape('entry point tests', (test) => {
   test.test('valid lat/lon should call lookup and return result', (t) => {
+    const logger = mocklogger();
 
     temp.mkdir('whosonfirst', (err, temp_dir) => {
       t.notOk(err);
@@ -26,12 +28,14 @@ tape('entry point tests', (test) => {
               }
             };
           }
-        }
+        },
+        'pelias-logger': logger
       })(temp_dir);
       const server = app.listen();
       const port = server.address().port;
 
       request.get(`http://localhost:${port}/21.212121/12.121212`, (err, response, body) => {
+        t.ok(logger.hasInfoMessages());
         t.notOk(err);
         t.equals(response.statusCode, 200);
         t.equals(body, 'this is the result');
@@ -46,6 +50,8 @@ tape('entry point tests', (test) => {
   });
 
   test.test('request not matching desired path should return 404', (t) => {
+    const logger = mocklogger();
+
     temp.mkdir('whosonfirst', (err, temp_dir) => {
       t.notOk(err);
 
@@ -62,12 +68,14 @@ tape('entry point tests', (test) => {
               }
             };
           }
-        }
+        },
+        'pelias-logger': logger
       })(temp_dir);
       const server = app.listen();
       const port = server.address().port;
 
       request.get(`http://localhost:${port}/21.212121`, (err, response, body) => {
+        t.ok(logger.hasInfoMessages());
         t.notOk(err);
         t.equals(response.statusCode, 404);
         t.end();
@@ -80,7 +88,9 @@ tape('entry point tests', (test) => {
 
   });
 
-  ['a', NaN, Infinity, {}, false, null, undefined].forEach((bad_lat_value) => {
+  ['a', NaN, Infinity, '{}', false, null, undefined].forEach((bad_lat_value) => {
+    const logger = mocklogger();
+
     test.test('non-finite lat should return 400', (t) => {
       temp.mkdir('whosonfirst', (err, temp_dir) => {
         t.notOk(err);
@@ -98,12 +108,14 @@ tape('entry point tests', (test) => {
                 }
               };
             }
-          }
+          },
+          'pelias-logger': logger
         })(temp_dir);
         const server = app.listen();
         const port = server.address().port;
 
         request.get(`http://localhost:${port}/21.212121/${bad_lat_value}`, (err, response, body) => {
+          t.ok(logger.hasInfoMessages());
           t.notOk(err);
           t.equals(response.statusCode, 400);
           t.equals(body, 'Cannot parse input');
@@ -119,7 +131,9 @@ tape('entry point tests', (test) => {
 
   });
 
-  ['a', NaN, Infinity, {}, false, null, undefined].forEach((bad_lon_value) => {
+  ['a', NaN, Infinity, '{}', false, null, undefined].forEach((bad_lon_value) => {
+    const logger = mocklogger();
+
     test.test('non-finite lon should return 400', (t) => {
       temp.mkdir('whosonfirst', (err, temp_dir) => {
         t.notOk(err);
@@ -137,12 +151,14 @@ tape('entry point tests', (test) => {
                 }
               };
             }
-          }
+          },
+          'pelias-logger': logger
         })(temp_dir);
         const server = app.listen();
         const port = server.address().port;
 
         request.get(`http://localhost:${port}/${bad_lon_value}/12.121212`, (err, response, body) => {
+          t.ok(logger.hasInfoMessages());
           t.notOk(err);
           t.equals(response.statusCode, 400);
           t.equals(body, 'Cannot parse input');
