@@ -31,6 +31,16 @@ Requests are made to the endpoint in the format:  `http://localhost:3102/<lon>/<
 
 For example: `http://localhost:3102/-106.937/34.060`
 
+##### Privacy Concerns
+
+The service supports the `DNT`[https://en.wikipedia.org/wiki/Do_Not_Track] header by looking for one of the following headers:
+
+- `DNT`
+- `dnt`
+- `do_not_track`
+
+When any of these headers are supplied in the request (with any value), the request log will output `/[removed]/[removed]` instead of the longitude/latitude values.  
+
 #### Configuration
 
 The only available configuration option is the port on which the service runs.  To run on a different port, start with:
