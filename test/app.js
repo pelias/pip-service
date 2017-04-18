@@ -270,7 +270,7 @@ tape('entry point tests', (test) => {
         options.headers[header] = `${header} header value`;
 
         request(options, (err, response, body) => {
-            t.ok(logger.isInfoMessage(/GET \/ /));
+            t.ok(logger.isInfoMessage(/GET \/\[removed\]\/\[removed\] /));
             t.notOk(err);
             t.equals(response.statusCode, 200);
             t.equals(body, 'this is the result');

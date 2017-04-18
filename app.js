@@ -44,7 +44,7 @@ function log() {
     if (['DNT', 'dnt', 'do_not_track'].some((header) => {
       return req.headers.hasOwnProperty(header);
     })) {
-      return '/';
+      return '/[removed]/[removed]';
     } else {
       return req.originalUrl;
     }
