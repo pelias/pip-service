@@ -234,4 +234,100 @@ tape('entry point tests', (test) => {
 
   });
 
+  test.test('`do_not_track` header set to `true` should log request without lat/lon', (t) => {
+    const logger = mocklogger();
+
+    temp.mkdir('whosonfirst', (err, temp_dir) => {
+      t.notOk(err);
+
+      fs.mkdirSync(path.join(temp_dir, 'data'));
+      fs.mkdirSync(path.join(temp_dir, 'meta'));
+
+      const app = proxyquire('../app', {
+        'pelias-wof-admin-lookup': {
+          resolver: (datapath) => {
+            t.equals(datapath, temp_dir);
+            return {
+              lookup: (centroid, layers, callback) => {
+                t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+                t.deepEquals(layers, undefined);
+                callback(undefined, 'this is the result');
+              }
+            };
+          }
+        },
+        'pelias-logger': logger
+      })(temp_dir);
+      const server = app.listen();
+      const port = server.address().port;
+
+      request({
+          url: `http://localhost:${port}/21.212121/12.121212`,
+          headers: {
+            do_not_track: true
+          }
+        }, (err, response, body) => {
+          t.ok(logger.isInfoMessage(/GET \/ /));
+          t.notOk(err);
+          t.equals(response.statusCode, 200);
+          t.equals(body, 'this is the result');
+          t.end();
+
+          server.close();
+          temp.cleanupSync();
+        }
+      );
+
+    });
+
+  });
+
+  test.test('`do_not_track` header set to `false` should log request without lat/lon', (t) => {
+    const logger = mocklogger();
+
+    temp.mkdir('whosonfirst', (err, temp_dir) => {
+      t.notOk(err);
+
+      fs.mkdirSync(path.join(temp_dir, 'data'));
+      fs.mkdirSync(path.join(temp_dir, 'meta'));
+
+      const app = proxyquire('../app', {
+        'pelias-wof-admin-lookup': {
+          resolver: (datapath) => {
+            t.equals(datapath, temp_dir);
+            return {
+              lookup: (centroid, layers, callback) => {
+                t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+                t.deepEquals(layers, undefined);
+                callback(undefined, 'this is the result');
+              }
+            };
+          }
+        },
+        'pelias-logger': logger
+      })(temp_dir);
+      const server = app.listen();
+      const port = server.address().port;
+
+      request({
+          url: `http://localhost:${port}/21.212121/12.121212`,
+          headers: {
+            do_not_track: false
+          }
+        }, (err, response, body) => {
+          t.ok(logger.isInfoMessage(/GET \/21.212121\/12.121212 /));
+          t.notOk(err);
+          t.equals(response.statusCode, 200);
+          t.equals(body, 'this is the result');
+          t.end();
+
+          server.close();
+          temp.cleanupSync();
+        }
+      );
+
+    });
+
+  });
+
 });

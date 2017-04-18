@@ -9,6 +9,14 @@ const morgan = require( 'morgan' );
 const logger = require('pelias-logger').get('pip');
 const through = require( 'through2' );
 
+// rewrite originalUrl if the request shouldn't be tracked (the field morgan logs)
+const doNotTrack = (req, res, next) => {
+  if (req.headers.do_not_track === 'true') {
+    req.originalUrl = '/';
+  }
+  next();
+};
+
 const validate = (req, res, next) => {
   req.query.centroid = {
     lat: _.toNumber(req.params.lat),
@@ -56,7 +64,7 @@ module.exports = (datapath) => {
   const pointInPoly = adminLookup.resolver(datapath);
 
   const router = new Router();
-  router.get('/:lon/:lat', validate, lookup(pointInPoly), output);
+  router.get('/:lon/:lat', doNotTrack, validate, lookup(pointInPoly), output);
 
   app.use(log(), router);
   return app;
