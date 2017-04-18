@@ -9,14 +9,6 @@ const morgan = require( 'morgan' );
 const logger = require('pelias-logger').get('pip');
 const through = require( 'through2' );
 
-// rewrite originalUrl if the request shouldn't be tracked (the field morgan logs)
-const doNotTrack = (req, res, next) => {
-  if (req.headers.do_not_track === 'true') {
-    req.originalUrl = '/';
-  }
-  next();
-};
-
 const validate = (req, res, next) => {
   req.query.centroid = {
     lat: _.toNumber(req.params.lat),
@@ -47,6 +39,17 @@ const output = (req, res, next) => {
 };
 
 function log() {
+  morgan.token('url', (req, res) => {
+    // if there's a DNT header, just return '/' as the URL
+    if (['DNT', 'dnt', 'do_not_track'].some((header) => {
+      return req.headers.hasOwnProperty(header);
+    })) {
+      return '/';
+    } else {
+      return req.originalUrl;
+    }
+  });
+
   return morgan('combined', {
     stream: through( function write( ln, _, next ){
       logger.info( ln.toString().trim() );
@@ -64,7 +67,7 @@ module.exports = (datapath) => {
   const pointInPoly = adminLookup.resolver(datapath);
 
   const router = new Router();
-  router.get('/:lon/:lat', doNotTrack, validate, lookup(pointInPoly), output);
+  router.get('/:lon/:lat', validate, lookup(pointInPoly), output);
 
   app.use(log(), router);
   return app;
