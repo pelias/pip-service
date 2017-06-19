@@ -12,9 +12,9 @@ This service provides Who's on First-based point-in-polygon lookup functionality
 ## Installation
 
 ```bash
-git clone git@github.com:pelias/pip-service.git
-cd pip-service
-npm install
+$ git clone git@github.com:pelias/pip-service.git
+$ cd pip-service
+$ npm install
 ```
 
 [![NPM](https://nodei.co/npm/pelias-pip-service.png?downloads=true&stars=true)](https://nodei.co/npm/pelias-pip-service)
