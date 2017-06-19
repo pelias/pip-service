@@ -9,17 +9,23 @@ const morgan = require( 'morgan' );
 const logger = require('pelias-logger').get('pip');
 const through = require( 'through2' );
 
-const validate = (req, res, next) => {
-  req.query.centroid = {
-    lat: _.toNumber(req.params.lat),
-    lon: _.toNumber(req.params.lon)
-  };
+function isFiniteNumber(value) {
+  return !_.isEmpty(_.trim(value)) && _.isFinite(_.toNumber(value));
+}
 
-  if (!_.isFinite(req.query.centroid.lat) || !_.isFinite(req.query.centroid.lon)) {
+const validate = (req, res, next) => {
+  if (_.at(req.params, ['lat', 'lon']).every(isFiniteNumber)) {
+    // both lat and lon are non-blank finite numbers, so validation step passes
+    req.query.centroid = {
+      lat: _.toNumber(req.params.lat),
+      lon: _.toNumber(req.params.lon)
+    };
+    next();
+
+  } else {
     res.status(400).send('Cannot parse input');
     next('route'); // skip lookup middleware and output, still logs
-  } else {
-    next();
+
   }
 
 };
