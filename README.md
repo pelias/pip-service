@@ -40,8 +40,8 @@ the user's [Mapzen Developer](mapzen.com/developers) api key.
 ```bash
 $ git clone git@github.com:pelias/pip-service.git
 $ cd pip-service
-docker build .
-docker run -p 3102:3102
+docker build -t pelias/pip .
+docker run -d -p 3102:3102 --name pip1 pelias/pip
 ```
 
 [![NPM](https://nodei.co/npm/pelias-pip-service.png?downloads=true&stars=true)](https://nodei.co/npm/pelias-pip-service)
