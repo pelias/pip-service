@@ -22,7 +22,6 @@ RUN git clone https://github.com/pelias/whosonfirst.git /code/pelias/whosonfirst
 WORKDIR /code/pelias/whosonfirst
 
 # install npm dependencies
-RUN git checkout filtered-download
 RUN npm install
 RUN npm run download
 
