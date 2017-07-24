@@ -17,6 +17,33 @@ $ cd pip-service
 $ npm install
 ```
 
+The Who's on First data required to run an instance of the PIP service
+needs to be downloaded manually before starting up the service.
+We recommend using the [pelias/whosonfirst](https://github.com/pelias/whosonfirst)
+download script to accomplish this. Be sure to consult the README in that
+repository for configuration details, such as filtering the data by a specific area.
+
+```bash
+$ npm i pelias-whosonfirst
+$ cd node_modules/pelias-whosonfirst
+$ npm run download
+```
+
+## Installation with Docker
+
+The docker container is setup to perform the data download during the build.
+The only customization required is to the `docker/pelias.json` file.
+It should be updated to reflect the desired coverage area and placetypes.
+There is an api key placeholder in there as well, that should be replaced with
+the user's [Mapzen Developer](mapzen.com/developers) api key.
+
+```bash
+$ git clone git@github.com:pelias/pip-service.git
+$ cd pip-service
+docker build -t pelias/pip .
+docker run -d -p 3102:3102 --name pip1 pelias/pip
+```
+
 [![NPM](https://nodei.co/npm/pelias-pip-service.png?downloads=true&stars=true)](https://nodei.co/npm/pelias-pip-service)
 
 ## NPM Module

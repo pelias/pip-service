@@ -1,0 +1,14 @@
+{
+  "logger": {
+    "level": "info"
+  },
+  "imports": {
+    "whosonfirst": {
+      "datapath": "/whosonfirst",
+      "importPostalcodes": true,
+      "importVenues": false,
+      "importPlace": "101715829",
+      "api_key": "your-api-key"
+    }
+  }
+}
