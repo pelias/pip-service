@@ -1,20 +1,22 @@
-FROM ubuntu:16.04
+# base image
+FROM pelias/baseimage
 
-# dependencies (for node)
-RUN apt-get update && apt-get install -y git-core curl bzip2
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+# downloader apt dependencies
+# note: this is done in one command in order to keep down the size of intermediate containers
+RUN apt-get update && apt-get install -y bzip2 && rm -rf /var/lib/apt/lists/*
 
-# rest of dependencies
-RUN apt-get update && apt-get install -y nodejs
-RUN npm install -g npm
+# change working dir
+ENV WORKDIR /code/pelias/pip-service
+WORKDIR ${WORKDIR}
 
-# copy in the pip-service code
-WORKDIR /pip
-COPY . .
+# copy code from local checkout
+ADD . ${WORKDIR}
+
+# install npm dependencies
 RUN npm install
 
-# creates a directory called data
-VOLUME /whosonfirst
+# run tests
+RUN npm test
 
 # start the pip service using the directory the data was downloaded to
-CMD ["npm", "start", "--", "/whosonfirst"]
+CMD ["npm", "start", "--", "/data/whosonfirst"]
