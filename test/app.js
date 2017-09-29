@@ -49,6 +49,132 @@ tape('entry point tests', (test) => {
 
   });
 
+  test.test('layers should be passed to lookup when supplied', t => {
+    const logger = mocklogger();
+
+    temp.mkdir('whosonfirst', (err, temp_dir) => {
+      t.notOk(err);
+
+      fs.mkdirSync(path.join(temp_dir, 'data'));
+      fs.mkdirSync(path.join(temp_dir, 'meta'));
+
+      const app = proxyquire('../app', {
+        'pelias-wof-admin-lookup': {
+          resolver: (datapath) => {
+            t.equals(datapath, temp_dir);
+            return {
+              lookup: (centroid, layers, callback) => {
+                t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+                t.deepEquals(layers, ['layer1', 'layer2']);
+                callback(undefined, 'this is the result');
+              }
+            };
+          }
+        },
+        'pelias-logger': logger
+      })(temp_dir);
+      const server = app.listen();
+      const port = server.address().port;
+
+      request.get(`http://localhost:${port}/21.212121/12.121212?layers=%20layer1%20,,%20layer2%20`, (err, response, body) => {
+        t.ok(logger.isInfoMessage(/GET \/21.212121\/12.121212\?layers=%20layer1%20,,%20layer2%20 /));
+        t.notOk(err);
+        t.equals(response.statusCode, 200);
+        t.equals(body, 'this is the result');
+        t.end();
+        server.close();
+        temp.cleanupSync();
+
+      });
+
+    });
+
+  });
+
+  test.test('layers trimmable to empty string should pass undefined to lookup', t => {
+    const logger = mocklogger();
+
+    temp.mkdir('whosonfirst', (err, temp_dir) => {
+      t.notOk(err);
+
+      fs.mkdirSync(path.join(temp_dir, 'data'));
+      fs.mkdirSync(path.join(temp_dir, 'meta'));
+
+      const app = proxyquire('../app', {
+        'pelias-wof-admin-lookup': {
+          resolver: (datapath) => {
+            t.equals(datapath, temp_dir);
+            return {
+              lookup: (centroid, layers, callback) => {
+                t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+                t.deepEquals(layers, undefined);
+                callback(undefined, 'this is the result');
+              }
+            };
+          }
+        },
+        'pelias-logger': logger
+      })(temp_dir);
+      const server = app.listen();
+      const port = server.address().port;
+
+      request.get(`http://localhost:${port}/21.212121/12.121212?layers=%20`, (err, response, body) => {
+        t.ok(logger.isInfoMessage(/GET \/21.212121\/12.121212\?layers=%20 /));
+        t.notOk(err);
+        t.equals(response.statusCode, 200);
+        t.equals(body, 'this is the result');
+        t.end();
+        server.close();
+        temp.cleanupSync();
+
+      });
+
+    });
+
+  });
+
+  test.test('layers reduceable to all empty strings should pass undefined to lookup', t => {
+    const logger = mocklogger();
+
+    temp.mkdir('whosonfirst', (err, temp_dir) => {
+      t.notOk(err);
+
+      fs.mkdirSync(path.join(temp_dir, 'data'));
+      fs.mkdirSync(path.join(temp_dir, 'meta'));
+
+      const app = proxyquire('../app', {
+        'pelias-wof-admin-lookup': {
+          resolver: (datapath) => {
+            t.equals(datapath, temp_dir);
+            return {
+              lookup: (centroid, layers, callback) => {
+                t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+                t.deepEquals(layers, undefined);
+                callback(undefined, 'this is the result');
+              }
+            };
+          }
+        },
+        'pelias-logger': logger
+      })(temp_dir);
+      const server = app.listen();
+      const port = server.address().port;
+
+      request.get(`http://localhost:${port}/21.212121/12.121212?layers=,,`, (err, response, body) => {
+        t.ok(logger.isInfoMessage(/GET \/21.212121\/12.121212\?layers=,, /));
+        t.notOk(err);
+        t.equals(response.statusCode, 200);
+        t.equals(body, 'this is the result');
+        t.end();
+        server.close();
+        temp.cleanupSync();
+
+      });
+
+    });
+
+  });
+
   test.test('request not matching desired path should return 404', (t) => {
     const logger = mocklogger();
 

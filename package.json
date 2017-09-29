@@ -25,18 +25,18 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
-    "pelias-logger": "^0.2.0",
-    "pelias-wof-admin-lookup": "^3.10.0",
+    "pelias-logger": "0.2.0",
+    "pelias-wof-admin-lookup": "4.0.0",
     "through2": "^2.0.3"
   },
   "devDependencies": {
     "jshint": "^2.8.0",
     "npm-check": "git://github.com/orangejulius/npm-check.git#disable-update-check",
-    "pelias-mock-logger": "^1.1.0",
+    "pelias-mock-logger": "1.2.0",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^1.7.10",
     "request": "^2.79.0",
-    "semantic-release": "^6.3.2",
+    "semantic-release": "^8.0.1",
     "tap-dot": "^1.0.1",
     "tape": "^4.2.2",
     "temp": "^0.8.3"
