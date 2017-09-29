@@ -28,11 +28,38 @@ const validate = (req, res, next) => {
 
   }
 
+
+};
+
+// middleware that cleans up layers parameters, eg:
+// 'layers=layer1,layer2' => ['layer1', 'layer2']
+// 'layers= layer1 ,  , layer2 ' => ['layer1', 'layer2']
+// 'layers= , , ' => undefined
+// 'layers=' => undefined
+// no layers parameter => undefined
+const parseLayers = (req, res, next) => {
+  const layers = _.split(req.query.layers, ',').reduce((layers, layer) => {
+    // only add to the valid layers list if it's not reduceable to an empty string
+    if (!_.isEmpty(_.trim(layer))) {
+      layers.push(_.trim(layer));
+    }
+    return layers;
+  }, []);
+
+  // if there are no layers, remove the parameter
+  if (_.isEmpty(layers)) {
+    delete req.query.layers;
+  } else {
+    req.query.layers = layers;
+  }
+
+  next();
+
 };
 
 function lookup(pointInPoly) {
   return (req, res, next) => {
-    pointInPoly.lookup(req.query.centroid, undefined, (err, result) => {
+    pointInPoly.lookup(req.query.centroid, req.query.layers, (err, result) => {
       req.query.resolved = result;
       next();
     });
@@ -73,7 +100,7 @@ module.exports = (datapath) => {
   const pointInPoly = adminLookup.resolver(datapath);
 
   const router = new Router();
-  router.get('/:lon/:lat', validate, lookup(pointInPoly), output);
+  router.get('/:lon/:lat', validate, parseLayers, lookup(pointInPoly), output);
 
   app.use(log(), router);
   return app;
