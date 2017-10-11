@@ -16,7 +16,8 @@
   "author": "Mapzen",
   "license": "MIT",
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 4.0.0",
+    "npm": "^3.10.10"
   },
   "repository": {
     "type": "git",
