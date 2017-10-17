@@ -33,6 +33,14 @@ Requests are made to the endpoint in the format:  `http://localhost:3102/<lon>/<
 
 For example: `http://localhost:3102/-106.937/34.060`
 
+#### Downloading data
+
+Because [pelias/whosonfirst](https://github.com/pelias/whosonfirst) is a dependency of this package, its downloader can be used:
+
+`npm run download`
+
+This will download Who's on First data using the same [configuration options](https://github.com/pelias/whosonfirst#downloading-the-data) from `pelias.json` as the whosonfirst downloader.
+
 ##### Privacy Concerns
 
 The service supports the `DNT`[https://en.wikipedia.org/wiki/Do_Not_Track] header by looking for one of the following headers:

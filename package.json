@@ -9,13 +9,15 @@
     "lint": "jshint .",
     "travis": "npm run check-dependencies && npm test",
     "validate": "npm ls",
+    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "check-dependencies": "node_modules/.bin/npm-check --production"
   },
   "author": "Mapzen",
   "license": "MIT",
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 4.0.0",
+    "npm": "^3.10.10"
   },
   "repository": {
     "type": "git",
