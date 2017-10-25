@@ -2,6 +2,8 @@
 
 # Pelias Point-in-Polygon Service
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pelias/pip-service.svg)](https://greenkeeper.io/)
+
 ![Travis CI Status](https://travis-ci.org/pelias/pip-service.svg)
 [![Gitter Chat](https://badges.gitter.im/pelias/pelias.svg)](https://gitter.im/pelias/pelias?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -32,6 +34,14 @@ To start the PiP service, type: `npm start <path to Who's on First data>`.  By d
 Requests are made to the endpoint in the format:  `http://localhost:3102/<lon>/<lat>`.
 
 For example: `http://localhost:3102/-106.937/34.060`
+
+#### Downloading data
+
+Because [pelias/whosonfirst](https://github.com/pelias/whosonfirst) is a dependency of this package, its downloader can be used:
+
+`npm run download`
+
+This will download Who's on First data using the same [configuration options](https://github.com/pelias/whosonfirst#downloading-the-data) from `pelias.json` as the whosonfirst downloader.
 
 ##### Privacy Concerns
 

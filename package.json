@@ -9,13 +9,15 @@
     "lint": "jshint .",
     "travis": "npm run check-dependencies && npm test",
     "validate": "npm ls",
+    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "check-dependencies": "node_modules/.bin/npm-check --production"
   },
   "author": "Mapzen",
   "license": "MIT",
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 4.0.0",
+    "npm": "^3.10.10"
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,8 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
-    "pelias-logger": "0.2.0",
-    "pelias-wof-admin-lookup": "4.0.0",
+    "pelias-logger": "0.3.0",
+    "pelias-wof-admin-lookup": "4.3.0",
     "through2": "^2.0.3"
   },
   "devDependencies": {
