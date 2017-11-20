@@ -18,8 +18,7 @@ tape('entry point tests', (test) => {
 
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: (datapath) => {
-            t.equals(datapath, temp_dir);
+          localResolver: () => {
             return {
               lookup: (centroid, layers, callback) => {
                 t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
@@ -60,8 +59,7 @@ tape('entry point tests', (test) => {
 
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: (datapath) => {
-            t.equals(datapath, temp_dir);
+          localResolver: () => {
             return {
               lookup: (centroid, layers, callback) => {
                 t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
@@ -102,8 +100,7 @@ tape('entry point tests', (test) => {
 
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: (datapath) => {
-            t.equals(datapath, temp_dir);
+          localResolver: () => {
             return {
               lookup: (centroid, layers, callback) => {
                 t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
@@ -144,8 +141,7 @@ tape('entry point tests', (test) => {
 
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: (datapath) => {
-            t.equals(datapath, temp_dir);
+          localResolver: () => {
             return {
               lookup: (centroid, layers, callback) => {
                 t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
@@ -186,8 +182,7 @@ tape('entry point tests', (test) => {
 
       const app = proxyquire('../app', {
         'pelias-wof-admin-lookup': {
-          resolver: (datapath) => {
-            t.equals(datapath, temp_dir);
+          localResolver: () => {
             return {
               lookup: () => {
                 throw Error('lookup should not have been called');
@@ -226,8 +221,7 @@ tape('entry point tests', (test) => {
 
         const app = proxyquire('../app', {
           'pelias-wof-admin-lookup': {
-            resolver: (datapath) => {
-              t.equals(datapath, temp_dir);
+            localResolver: () => {
               return {
                 lookup: () => {
                   throw Error('lookup should not have been called');
@@ -271,8 +265,7 @@ tape('entry point tests', (test) => {
 
         const app = proxyquire('../app', {
           'pelias-wof-admin-lookup': {
-            resolver: (datapath) => {
-              t.equals(datapath, temp_dir);
+            localResolver: () => {
               return {
                 lookup: () => {
                   throw Error('lookup should not have been called');
@@ -376,8 +369,7 @@ tape('entry point tests', (test) => {
 
         const app = proxyquire('../app', {
           'pelias-wof-admin-lookup': {
-            resolver: (datapath) => {
-              t.equals(datapath, temp_dir);
+            localResolver: () => {
               return {
                 lookup: (centroid, layers, callback) => {
                   t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });

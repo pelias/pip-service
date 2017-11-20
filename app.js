@@ -97,7 +97,7 @@ module.exports = (datapath) => {
     throw Error(`${datapath} does not contain Who's on First data`);
   }
 
-  const pointInPoly = adminLookup.resolver(datapath);
+  const pointInPoly = adminLookup.localResolver();
 
   const router = new Router();
   router.get('/:lon/:lat', validate, parseLayers, lookup(pointInPoly), output);
