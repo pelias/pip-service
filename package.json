@@ -28,7 +28,7 @@
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
     "pelias-logger": "0.3.0",
-    "pelias-wof-admin-lookup": "4.3.0",
+    "pelias-wof-admin-lookup": "4.5.0",
     "through2": "^2.0.3"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
+const app = require('./app')();
+
 try {
-  const app = require('./app')(process.argv[2]);
   const port = ( parseInt(process.env.PORT) || 3102 );
 
   app.listen(port, () => {
@@ -8,6 +9,8 @@ try {
 
 } catch (err) {
   console.error(err);
-  process.exit(1);
 
+  // use exitCode to exit safely: https://nodejs.org/api/process.html#process_process_exit_code
+  process.exitCode = 1;
+  app.close();
 }
