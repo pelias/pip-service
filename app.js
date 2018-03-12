@@ -91,13 +91,8 @@ function log() {
   });
 }
 
-module.exports = (datapath) => {
-  // verify the WOF data structure first (must contain data and meta directories)
-  if (!['meta', 'data'].every((sub) => { return fs.existsSync(path.join(datapath, sub)); })) {
-    throw Error(`${datapath} does not contain Who's on First data`);
-  }
-
-  const pointInPoly = adminLookup.resolver(datapath);
+module.exports = () => {
+  const pointInPoly = adminLookup.localResolver();
 
   const router = new Router();
   router.get('/:lon/:lat', validate, parseLayers, lookup(pointInPoly), output);

@@ -19,4 +19,4 @@ RUN npm install
 RUN npm test
 
 # start the pip service using the directory the data was downloaded to
-CMD ["npm", "start", "--", "/data/whosonfirst"]
+CMD ["npm", "start"]
