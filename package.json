@@ -4,7 +4,7 @@
   "version": "0.0.0-development",
   "main": "index.js",
   "scripts": {
-    "start": "node --max_old_space_size=4096 index.js",
+    "start": "./bin/start",
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
     "travis": "npm run check-dependencies && npm test",
