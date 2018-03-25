@@ -46,7 +46,7 @@ That means it will automatically put the data in the place the service will expe
 
 ##### Privacy Concerns
 
-The service supports the DNT[https://en.wikipedia.org/wiki/Do_Not_Track] header by looking for one of the following headers:
+The service supports the [DNT](https://en.wikipedia.org/wiki/Do_Not_Track) header by looking for one of the following headers:
 
 - `DNT`
 - `dnt`
