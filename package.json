@@ -7,11 +7,9 @@
     "start": "./bin/start",
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
-    "travis": "npm run check-dependencies && npm test",
+    "travis": "npm test",
     "validate": "npm ls",
-    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "check-dependencies": "node_modules/.bin/npm-check --production"
+    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js"
   },
   "author": "Mapzen",
   "license": "MIT",
@@ -33,7 +31,6 @@
   },
   "devDependencies": {
     "jshint": "^2.8.0",
-    "npm-check": "git://github.com/orangejulius/npm-check.git#disable-update-check",
     "pelias-mock-logger": "1.2.0",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
@@ -46,7 +43,10 @@
   "pre-commit": [
     "lint",
     "validate",
-    "test",
-    "check-dependencies"
-  ]
+    "test"
+  ],
+  "release": {
+    "branch": "production",
+    "success": []
+  }
 }
