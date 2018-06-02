@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "jshint": "^2.8.0",
-    "pelias-mock-logger": "1.2.0",
+    "pelias-mock-logger": "1.3.0",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
     "request": "^2.79.0",
