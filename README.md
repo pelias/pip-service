@@ -12,7 +12,7 @@
 
 ## Overview
 
-This service provides Who's on First-based point-in-polygon lookup functionality.  
+This service provides Who's on First-based point-in-polygon lookup functionality.
 
 ## Installation
 
@@ -55,7 +55,7 @@ The service supports the [DNT](https://en.wikipedia.org/wiki/Do_Not_Track) heade
 - `dnt`
 - `do_not_track`
 
-When any of these headers are supplied in the request (with any value), the request log will output `/[removed]/[removed]` instead of the longitude/latitude values.  
+When any of these headers are supplied in the request (with any value), the request log will output `/[removed]/[removed]` instead of the longitude/latitude values.
 
 #### Configuration
 
