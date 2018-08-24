@@ -7,11 +7,9 @@
     "start": "./bin/start",
     "test": "node test/test | tap-dot",
     "lint": "jshint .",
-    "travis": "npm run check-dependencies && npm test",
+    "travis": "npm test",
     "validate": "npm ls",
-    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "check-dependencies": "node_modules/.bin/npm-check --production"
+    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js"
   },
   "author": "Mapzen",
   "license": "MIT",
@@ -27,26 +25,28 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
-    "pelias-logger": "0.3.1",
-    "pelias-wof-admin-lookup": "4.5.5",
+    "pelias-logger": "^0.4.2",
+    "pelias-wof-admin-lookup": "^4.6.5",
     "through2": "^2.0.3"
   },
   "devDependencies": {
     "jshint": "^2.8.0",
-    "npm-check": "git://github.com/orangejulius/npm-check.git#disable-update-check",
-    "pelias-mock-logger": "1.2.0",
+    "pelias-mock-logger": "^1.3.0",
     "precommit-hook": "^3.0.0",
-    "proxyquire": "^1.7.10",
+    "proxyquire": "^2.0.0",
     "request": "^2.79.0",
-    "semantic-release": "^8.0.1",
-    "tap-dot": "^1.0.1",
+    "semantic-release": "^15.0.0",
+    "tap-dot": "^2.0.0",
     "tape": "^4.2.2",
     "temp": "^0.8.3"
   },
   "pre-commit": [
     "lint",
     "validate",
-    "test",
-    "check-dependencies"
-  ]
+    "test"
+  ],
+  "release": {
+    "branch": "production",
+    "success": []
+  }
 }

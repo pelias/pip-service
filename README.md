@@ -1,4 +1,7 @@
-> This repository is part of the [Pelias](https://github.com/pelias/pelias) project. Pelias is an open-source, open-data geocoder built by [Mapzen](https://www.mapzen.com/) that also powers [Mapzen Search](https://mapzen.com/projects/search). Our official user documentation is [here](https://mapzen.com/documentation/search/).
+>This repository is part of the [Pelias](https://github.com/pelias/pelias)
+>project. Pelias is an open-source, open-data geocoder originally sponsored by
+>[Mapzen](https://www.mapzen.com/). Our official user documentation is
+>[here](https://github.com/pelias/documentation).
 
 # Pelias Point-in-Polygon Service
 
@@ -9,7 +12,7 @@
 
 ## Overview
 
-This service provides Who's on First-based point-in-polygon lookup functionality.  
+This service provides Who's on First-based point-in-polygon lookup functionality.
 
 ## Installation
 
@@ -46,13 +49,13 @@ That means it will automatically put the data in the place the service will expe
 
 ##### Privacy Concerns
 
-The service supports the `DNT`[https://en.wikipedia.org/wiki/Do_Not_Track] header by looking for one of the following headers:
+The service supports the [DNT](https://en.wikipedia.org/wiki/Do_Not_Track) header by looking for one of the following headers:
 
 - `DNT`
 - `dnt`
 - `do_not_track`
 
-When any of these headers are supplied in the request (with any value), the request log will output `/[removed]/[removed]` instead of the longitude/latitude values.  
+When any of these headers are supplied in the request (with any value), the request log will output `/[removed]/[removed]` instead of the longitude/latitude values.
 
 #### Configuration
 
