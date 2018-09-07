@@ -18,5 +18,7 @@ RUN npm install
 # run tests
 RUN npm test
 
+USER pelias
+
 # start the pip service using the directory the data was downloaded to
 CMD ["./bin/start"]
