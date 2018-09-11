@@ -35,7 +35,6 @@
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
     "request": "^2.79.0",
-    "semantic-release": "^15.0.0",
     "tap-dot": "^2.0.0",
     "tape": "^4.2.2",
     "temp": "^0.8.3"
