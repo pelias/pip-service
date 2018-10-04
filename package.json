@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./bin/start",
-    "test": "node test/test | tap-dot",
+    "test": "./bin/test",
     "lint": "jshint .",
     "travis": "npm test",
     "validate": "npm ls",
@@ -25,7 +25,7 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
-    "pelias-logger": "^0.4.2",
+    "pelias-logger": "^1.2.1",
     "pelias-wof-admin-lookup": "^4.6.5",
     "through2": "^2.0.3"
   },
@@ -35,7 +35,6 @@
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
     "request": "^2.79.0",
-    "semantic-release": "^15.0.0",
     "tap-dot": "^2.0.0",
     "tape": "^4.2.2",
     "temp": "^0.8.3"
