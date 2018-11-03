@@ -14,6 +14,12 @@
 
 This service provides Who's on First-based point-in-polygon lookup functionality.
 
+## Requirements
+
+Node.js is required.
+
+See [Pelias software requirements](https://github.com/pelias/documentation/blob/master/requirements.md) for required and recommended versions.
+
 ## Installation
 
 ```bash
