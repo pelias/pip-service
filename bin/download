@@ -1,0 +1,3 @@
+#!/bin/bash
+
+node node_modules/pelias-whosonfirst/utils/download_data.js

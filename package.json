@@ -9,7 +9,7 @@
     "lint": "jshint .",
     "travis": "npm test",
     "validate": "npm ls",
-    "download": "node node_modules/pelias-whosonfirst/utils/download_data.js"
+    "download": "./bin/download"
   },
   "author": "Mapzen",
   "license": "MIT",
