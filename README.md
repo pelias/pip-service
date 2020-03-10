@@ -35,7 +35,9 @@ The `pelias-pip-service` npm module can be found here:
 
 #### Usage
 
-To start the PiP service, type: `npm start`.  By default, the service starts on port 3102. It will look for Who's on First data in the place configured in `pelias.json`.
+To start the PiP service, use the start script `./bin/start`, or use `npm start`.
+
+It will look for Who's on First data in the place configured in `pelias.json`.
 
 Requests are made to the endpoint in the format:  `http://localhost:3102/<lon>/<lat>`.
 
