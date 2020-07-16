@@ -1,10 +1,12 @@
+const util = require('util');
 const app = require('./app')();
 
 try {
   const port = ( parseInt(process.env.PORT) || 3102 );
+  const host = process.env.HOST || undefined;
 
-  app.listen(port, () => {
-    console.log(`pip-service is now running on port ${port}`);
+  app.listen(port, host, () => {
+    console.log(util.format( 'pip-service is now running on %s:%s', host || '0.0.0.0', port ));
   });
 
 } catch (err) {
