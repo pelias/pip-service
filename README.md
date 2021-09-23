@@ -5,8 +5,6 @@
 
 # Pelias Point-in-Polygon Service
 
-![Travis CI Status](https://travis-ci.org/pelias/pip-service.svg)
-
 ## Overview
 
 This service provides Who's on First-based point-in-polygon lookup functionality.
