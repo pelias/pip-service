@@ -7,7 +7,7 @@
     "start": "./bin/start",
     "test": "./bin/test",
     "lint": "jshint .",
-    "travis": "npm test",
+    "ci": "npm test",
     "validate": "npm ls",
     "download": "./bin/download"
   },
