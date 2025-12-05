@@ -10,6 +10,8 @@ const logger = require('pelias-logger').get('pip');
 const through = require( 'through2' );
 
 function isFiniteNumber(value) {
+  //Required, since loadsh toNumber will can't parse european style in string (eg. '123,45')
+  value = value.replace(',', '.');
   return !_.isEmpty(_.trim(value)) && _.isFinite(_.toNumber(value));
 }
 
@@ -17,8 +19,8 @@ const validate = (req, res, next) => {
   if (_.at(req.params, ['lat', 'lon']).every(isFiniteNumber)) {
     // both lat and lon are non-blank finite numbers, so validation step passes
     req.query.centroid = {
-      lat: _.toNumber(req.params.lat),
-      lon: _.toNumber(req.params.lon)
+      lat: _.toNumber(req.params.lat.replace(',', '.')),
+      lon: _.toNumber(req.params.lon.replace(',', '.'))
     };
     next();
 
