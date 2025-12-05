@@ -249,4 +249,32 @@ tape('entry point tests', (test) => {
     });
     t.end();
   });
+  test.test('Coordinates with comma as decimal separator should work as well', (t) => {
+    const logger = mocklogger();
+    const app = proxyquire('../app', {
+      'pelias-wof-admin-lookup': {
+        localResolver: () => {
+          return {
+            lookup: (centroid, layers, callback) => {
+              t.deepEquals(centroid, { lat: 12.121212, lon: 21.212121 });
+              t.deepEquals(layers, undefined);
+              callback(undefined, 'this is the result');
+            }
+          };
+        }
+      },
+      'pelias-logger': logger
+    })();
+    const server = app.listen();
+    const port = server.address().port;
+
+    request.get(`http://localhost:${port}/21,212121/12,121212`, (err, response, body) => {
+      t.ok(logger.isInfoMessage(/GET \/21,212121\/12,121212 /));
+      t.notOk(err);
+      t.equals(response.statusCode, 200);
+      t.equals(body, 'this is the result');
+      t.end();
+      server.close();
+    });
+  });
 });
